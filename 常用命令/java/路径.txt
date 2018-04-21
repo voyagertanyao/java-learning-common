@@ -1,0 +1,9 @@
+1.获取配置文件或者资源的路径：
+
+	类名.class.getResource("xxx").getPath() ：得到一个/磁盘://xx/xx的路径（windows下，linux下没有第一个/）
+	new File(类名.class.getResource("xxx").getPath()).getPath()：得到没有第一个/的路径
+
+2.nio中，接口Paths.getPath()方法：
+	"/"表示项目所在磁盘根路径
+	"."表示项目根路径
+	

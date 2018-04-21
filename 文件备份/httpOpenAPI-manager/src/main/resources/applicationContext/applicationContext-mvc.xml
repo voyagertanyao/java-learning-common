@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+       http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd"
+	default-lazy-init="true">
+
+	<!-- 读取配置文件 -->
+	<context:property-placeholder location="classpath:config/config.properties"
+		ignore-resource-not-found="true" ignore-unresolvable="true" />
+
+	<!-- Spring扫描Controller -->
+	<context:component-scan base-package="com.cmcciot.platform"
+		use-default-filters="false">
+		<context:include-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+
+	<!--Spring3.1开始的注解 HandlerMapping -->
+	<bean id="requestMappingHandlerMapping"
+		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" />
+
+	<bean id="requestMappingHandlerAdapter"
+		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+		<property name="messageConverters">
+			<!-- 启动Spring MVC的注解功能，完成请求和注解POJO的映射 -->
+			<list>
+				<!-- json数据转换 -->
+				<bean
+					class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+					<property name="supportedMediaTypes">
+						<list>
+							<!-- 解决中文乱码的问题 -->
+							<value>text/html;charset=UTF-8</value>
+						</list>
+					</property>
+				</bean>
+				<bean
+					class="org.springframework.http.converter.ByteArrayHttpMessageConverter"></bean>
+				<bean
+					class="org.springframework.http.converter.StringHttpMessageConverter"></bean>
+				<bean
+					class="org.springframework.http.converter.ResourceHttpMessageConverter"></bean>
+				<bean
+					class="org.springframework.http.converter.xml.SourceHttpMessageConverter"></bean>
+				<bean
+					class="org.springframework.http.converter.xml.XmlAwareFormHttpMessageConverter"></bean>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 注册静态资源文件 -->
+	<mvc:resources mapping="/resource/**" location="/resource/**" />
+
+	<!-- 配置同时支持jsp模板 解析要放到最后 -->
+	<bean id="jspViewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="order" value="999" />
+		<property name="prefix" value="${jsp.template.path}" />
+		<property name="suffix" value="${jsp.template.suffix}" />
+		<property name="contentType" value="text/html;charset=${template.encoding}" />
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" />
+	</bean>
+
+	<!-- 错误 -->
+	<bean id="exceptionResolver"
+		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="defaultErrorView" value="error" />
+	</bean>
+</beans>

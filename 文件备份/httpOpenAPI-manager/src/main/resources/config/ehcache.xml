@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd" updateCheck="false">
+
+	<diskStore path="${java.io.tmpdir}/${system.project_name}/cache" />
+		
+	<cache name="userInfoCache" maxElementsInMemory="100"
+		overflowToDisk="false" diskPersistent="false" timeToIdleSeconds="60"
+		timeToLiveSeconds="180" memoryStoreEvictionPolicy="LRU" />
+	
+ </ehcache>

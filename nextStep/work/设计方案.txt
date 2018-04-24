@@ -1,0 +1,26 @@
+SNS模块-通讯录设计方案优化
+	1. 增加联系人头像、分组、标星联系人、备注等字段
+	
+		1. t_phone_book 联系人基本信息表
+			id 自增主键
+			userid 用户id
+			phone 联系人电话
+			name 联系人姓名
+			create_time 创建时间
+			update_time 更新修改时间
+			portrait_url 头像地址
+			group_id 分组(默认空：未分组)
+			id_star 标星（默认0：未标星）
+			remark 备注
+			
+		2. t_group_info 联系人分组表
+			id 自增主键
+			userid 用户id
+			group_name 分组名
+			create_time 创建时间
+			update_time 修改时间
+			
+		3. 
+			
+		
+		

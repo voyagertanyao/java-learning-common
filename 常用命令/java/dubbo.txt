@@ -1,0 +1,14 @@
+﻿1.dubbo启动时，默认加载spring的配置文件
+	配置文件默认路径：classpath*:META-INF/spring/*.xml
+	可以通过修改系统配置变量：dubbo.spring.config 覆盖默认路径
+
+2.dubbo配置一个filter
+	com.alibaba.dubbo.rpc.Filter文件中定义,默认路径:classpath*:META-INF/dubbo/
+	<!-- 消费方调用过程拦截 -->
+	<dubbo:reference filter="xxx,yyy" />
+	<!-- 消费方调用过程缺省拦截器，将拦截所有reference -->
+	<dubbo:consumer filter="xxx,yyy"/>
+	<!-- 提供方调用过程拦截 -->
+	<dubbo:service filter="xxx,yyy" />
+	<!-- 提供方调用过程缺省拦截器，将拦截所有service -->
+	<dubbo:provider filter="xxx,yyy"/>

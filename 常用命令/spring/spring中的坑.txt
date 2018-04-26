@@ -1,0 +1,1 @@
+1. spring3.x只能用在jdk1.7及以下版本；spring4.x可以在jdk1.8下编译

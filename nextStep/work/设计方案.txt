@@ -1,26 +1,34 @@
-SNS模块-通讯录设计方案优化
-	1. 增加联系人头像、分组、标星联系人、备注等字段
-	
-		1. t_phone_book 联系人基本信息表
-			id 自增主键
-			userid 用户id
-			phone 联系人电话
-			name 联系人姓名
-			create_time 创建时间
-			update_time 更新修改时间
-			portrait_url 头像地址
-			group_id 分组(默认空：未分组)
-			id_star 标星（默认0：未标星）
-			remark 备注
-			
-		2. t_group_info 联系人分组表
-			id 自增主键
-			userid 用户id
-			group_name 分组名
-			create_time 创建时间
-			update_time 修改时间
-			
-		3. 
-			
-		
-		
+-- ------------------------------------
+-- 增量脚本
+-- ------------------------------------
+
+-- 1 建表
+-- 1.1 通讯录表(t_phone_book)
+CREATE TABLE `t_phone_book`(
+    `id` bigint(16) not null AUTO_INCREMENT COMMENT '联系人id',
+    `user_id` varchar(40) not null COMMENT '用户id',
+    `name` varchar(32) not null COMMENT '联系人姓名',
+    `phone` varchar(16) not null COMMENT '联系人手机号',
+    `create_time` datetime default null COMMENT '创建时间',
+    `update_time` datetime default null COMMENT '修改时间',
+    `portrait_url` varchar(512) default null COMMENT '头像地址',
+    `contactor_type` int(4) default 1 COMMENT '联系人类型(1:普通联系人;2:家庭成员;3:同是联系人和家庭成员;默认为1)',
+    `is_star` int(1) default 0 COMMENT '0:未标星;1:标星联系人;默认为0',
+    PRIMARY KEY (`id`),
+    UNIQUE INDEX `index_phoneBook_userid_phone`(`user_id`, `phone`) COMMENT 't_phone_book.userid+phone联合唯一索引'
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT '通讯录表';
+
+-- 1.2 联系人操作记录表(t_contactor_operation)
+CREATE TABLE `t_contactor_operation`(
+    `id` bigint(16) not null AUTO_INCREMENT COMMENT '操作记录id',
+    `userid_sponsor` varchar(40) not null COMMENT '发起人用户id',
+    `phone_sponsor` varchar(16) not null COMMENT '发起人电话',
+    `userid_accept` varchar(40) default null COMMENT '接收人用户id',
+    `phone_accept` varchar(16) default null COMMENT '接收人电话',
+    `operation` int(2) not null COMMENT '发起人操作类型',
+    `result` varchar(4) not null COMMENT '本次操作结果(00:发起人处理中;01:发起人取消本次操作;10:接收人处理中;11:接收人同意;12:接收人拒绝;20:操作过期;)',
+    `time_sponsor` datetime default null COMMENT '操作发起时间',
+    `time_process` datetime default null COMMENT '最新操作时间',
+    PRIMARY KEY (`id`),
+    INDEX `index_contactorOperation_useridSponsor_phoneSponsor`(`userid_sponsor`,`phone_sponsor`) COMMENT 't_contactor_operation.userid_sponsor+phone_sponsor联合索引'
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT '联系人操作记录表';

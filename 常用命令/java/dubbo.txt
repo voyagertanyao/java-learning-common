@@ -1,4 +1,4 @@
-﻿1.dubbo启动时，默认加载spring的配置文件
+1.dubbo启动时，默认加载spring的配置文件
 	配置文件默认路径：classpath*:META-INF/spring/*.xml
 	可以通过修改系统配置变量：dubbo.spring.config 覆盖默认路径
 

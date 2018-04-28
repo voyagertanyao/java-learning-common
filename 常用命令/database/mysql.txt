@@ -1,7 +1,7 @@
-1. ²éÑ¯Ä³±í×ÔÔöÖ÷¼üµÄÏÂÒ»¸ö¿ÉÓÃÖµ
+1. æŸ¥è¯¢æŸè¡¨è‡ªå¢ä¸»é”®çš„ä¸‹ä¸€ä¸ªå¯ç”¨å€¼
     select auto_increment from information_schema.`TABLES` where table_name='tableName' and TABLE_SCHEMA='databaseName'
     eg. select auto_increment from information_schema.`TABLES` where table_name='t_phone_book' and TABLE_SCHEMA='sns'
-2. ²é¿´mysqlÊı¾İ¿â±àÂë×Ö·û¼¯
+2. æŸ¥çœ‹mysqlæ•°æ®åº“ç¼–ç å­—ç¬¦é›†
     show variables like 'character%';
-3. ÉèÖÃÖĞÎÄ°´ÕÕÓ¢ÎÄ×ÖÄ¸½øĞĞÅÅĞò
+3. è®¾ç½®ä¸­æ–‡æŒ‰ç…§è‹±æ–‡å­—æ¯è¿›è¡Œæ’åº
     select * from t_test t order by CONVERT(t.name USING gbk) desc ;

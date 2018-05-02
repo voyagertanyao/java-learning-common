@@ -1,7 +1,9 @@
-1. 查询某表自增主键的下一个可用值
+﻿1. 查询某表自增主键的下一个可用值
     select auto_increment from information_schema.`TABLES` where table_name='tableName' and TABLE_SCHEMA='databaseName'
     eg. select auto_increment from information_schema.`TABLES` where table_name='t_phone_book' and TABLE_SCHEMA='sns'
 2. 查看mysql数据库编码字符集
     show variables like 'character%';
 3. 设置中文按照英文字母进行排序
     select * from t_test t order by CONVERT(t.name USING gbk) desc ;
+4. 将查询结果为null的替换成想要的结果
+    select IFNULL(name,'') as name ;

@@ -1,34 +1,28 @@
--- ------------------------------------
--- 增量脚本
--- ------------------------------------
-
--- 1 建表
--- 1.1 通讯录表(t_phone_book)
-CREATE TABLE `t_phone_book`(
-    `id` bigint(16) not null AUTO_INCREMENT COMMENT '联系人id',
-    `user_id` varchar(40) not null COMMENT '用户id',
-    `name` varchar(32) not null COMMENT '联系人姓名',
-    `phone` varchar(16) not null COMMENT '联系人手机号',
-    `create_time` datetime default null COMMENT '创建时间',
-    `update_time` datetime default null COMMENT '修改时间',
-    `portrait_url` varchar(512) default null COMMENT '头像地址',
-    `contactor_type` int(4) default 1 COMMENT '联系人类型(1:普通联系人;2:家庭成员;3:同是联系人和家庭成员;默认为1)',
-    `is_star` int(1) default 0 COMMENT '0:未标星;1:标星联系人;默认为0',
-    PRIMARY KEY (`id`),
-    UNIQUE INDEX `index_phoneBook_userid_phone`(`user_id`, `phone`) COMMENT 't_phone_book.userid+phone联合唯一索引'
-)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT '通讯录表';
-
--- 1.2 联系人操作记录表(t_contactor_operation)
-CREATE TABLE `t_contactor_operation`(
+﻿
+-- 1.2 联系人操作记录表(t_operation_log)
+CREATE TABLE `t_operation_log`(
     `id` bigint(16) not null AUTO_INCREMENT COMMENT '操作记录id',
     `userid_sponsor` varchar(40) not null COMMENT '发起人用户id',
     `phone_sponsor` varchar(16) not null COMMENT '发起人电话',
     `userid_accept` varchar(40) default null COMMENT '接收人用户id',
     `phone_accept` varchar(16) default null COMMENT '接收人电话',
-    `operation` int(2) not null COMMENT '发起人操作类型',
-    `result` varchar(4) not null COMMENT '本次操作结果(00:发起人处理中;01:发起人取消本次操作;10:接收人处理中;11:接收人同意;12:接收人拒绝;20:操作过期;)',
+    `operation` int(2) not null COMMENT '发起人操作类型(1:邀请;2:删除;)',
+    `result` varchar(4) not null COMMENT '本次操作结果(00:发起人处理中;01:发起人取消本次操作;02:发起人处理完成;10:接收人处理中;11:接收人同意;12:接收人拒绝;20:操作过期;)',
     `time_sponsor` datetime default null COMMENT '操作发起时间',
     `time_process` datetime default null COMMENT '最新操作时间',
     PRIMARY KEY (`id`),
-    INDEX `index_contactorOperation_useridSponsor_phoneSponsor`(`userid_sponsor`,`phone_sponsor`) COMMENT 't_contactor_operation.userid_sponsor+phone_sponsor联合索引'
-)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT '联系人操作记录表';
+    INDEX `index_operationLog_useridSponsor`(`userid_sponsor`) COMMENT 't_operation_log.userid_sponsor索引',
+    INDEX `index_operationLog_phoneAccept`(`phone_accept`) COMMENT 't_operation_log.phone_accept索引'
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT '邀请记录表';
+
+-- 1.3 家庭成员表(t_family_member)
+CREATE TABLE `t_family_member`(
+    `id` bigint(16) not null AUTO_INCREMENT COMMENT '成员id',
+    `user_id` varchar(40) not null COMMENT '用户id',
+    `member_id` varchar(40) not null COMMENT '成员用户id',
+    `member_type` int(2) not null COMMENT '0：家庭成员；目前只有家庭成员',
+    `create_time` datetime not null COMMENT '添加时间',
+    `update_time` datetime default null COMMENT '修改时间',
+    PRIMARY KEY (`id`),
+    UNIQUE INDEX `index_familyMember_userId_memberId`(`user_id`,`member_id`) COMMENT 't_family_member.user_id+member_id联合索引'
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT '家庭成员表';

@@ -1,0 +1,7 @@
+ibatis2只支持
+	1. org.apache.log4j.Logger
+	2. java.util.logging.Logger
+	3. org.apache.commons.logging.LogFactory
+	4. java.lang.Object
+
+FailoverJedisCluster 需要org.apache.log4j.Logger的支持，这个时候如果配置了redis，项目就可以直接通过ibatis打印sql

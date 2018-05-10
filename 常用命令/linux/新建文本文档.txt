@@ -1,0 +1,6 @@
+﻿tail -f sns.log
+	实时跟踪该文件(CTRL + Z : 退出)
+	
+netstat -tunip|grep 端口号
+	查看该端口号占用情况
+	

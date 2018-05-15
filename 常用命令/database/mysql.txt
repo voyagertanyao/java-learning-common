@@ -7,3 +7,7 @@
     select * from t_test t order by CONVERT(t.name USING gbk) desc ;
 4. 将查询结果为null的替换成想要的结果
     select IFNULL(name,'') as name ;
+5. 查询自增步长和起始值
+    show session variables like `auto_inc%`;
+6. 修改自增主键步长
+    set @@auto_increment_increment=10; //设为10（如果不生效，可能是my.cnf文件设置了全局配置）

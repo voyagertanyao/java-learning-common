@@ -1,0 +1,1 @@
+1. dubbo服务管理平台：http://10.11.7.18:8080/governance/loadbalances  【root/xOJP14tdw~3&】

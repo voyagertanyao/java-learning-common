@@ -1,6 +1,13 @@
 ﻿tail -f sns.log
 	实时跟踪该文件(CTRL + Z : 退出)
 	
-netstat -tunip|grep 端口号
-	查看该端口号占用情况
+netstat -tunp(-anp)|grep 端口号
+	查看该端口号占用情况,如果无法显示pid，使用sudo netstat .....（查看其它用户的进程）
+	
+ps -ef | grep 进程号
+    查看进程号对应进程信息
+	
+grep 2018053001443159812735009 hoa.log -C 5
+	在hoa.log文件中查找包含2018053001443159812735009关键字的前后5行记录
+
 	
